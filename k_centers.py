@@ -39,7 +39,7 @@ def maximize_center_distances(distances, centroids):
             further_point = j
             further_center = minimum_center
 
-    return(further_point, further_center)
+    return(further_point, further_center, further_distance)
 
 def calcInertia(distances, centroids):
     """
@@ -74,11 +74,8 @@ def k_centers(dataset, k, p):
         return dataset
     
     distances = build_distance_matrix(dataset, p)
-
     centroids = set_k_centers(distances, k, p)
-    radius = calc_minkowski_distance(*maximize_center_distances(distances, centroids), p)
-    center_points = []
-    center_points.append(dataset[centroids])
-    inertia = calcInertia(distances, centroids)
+    radius = maximize_center_distances(distances, centroids)[2]
+
     
-    return(radius, center_points, inertia)
+    return(radius, dataset[centroids])
